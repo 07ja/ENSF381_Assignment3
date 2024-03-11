@@ -13,6 +13,70 @@ Submission  : Mar 11, 2024
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Login - CompanyCo</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function afterRender() {
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.addEventListener('click', function() {
+            submitButton.value = 'Submitted'; 
+            login();
+            submitButton.disabled = true; 
+            document.getElementById("messageBox").setAttribute("class" , 'messageBox');
+            });
+        });
+        // Function to fetch username and id
+        async function fetchUsers(inputName, inputPassword) {
+            try {
+                let response = await fetch('https://jsonplaceholder.typicode.com/users');
+                let Users = await response.json();
+                let username=[];
+                Users.forEach(element => {
+                    username.push(element.username);
+                });
+                if (username.includes(inputName)){
+                    Users.forEach(element => {
+                        if (element.username == inputName){
+                            element.email == inputPassword ? loginSuccess() : error_Input();
+                        }
+                    });
+                }
+                else{
+                    error_Input();
+                }
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+
+        }
+
+        function loginSuccess() {
+            console.log("Success");
+            const submitButton = document.querySelector('button[type="submit"]');   
+            showMessage("Login Successful!");
+            submitButton.disabled = false;
+        }
+        function error_Input() {
+            console.log("Fail");
+            const submitButton = document.querySelector('button[type="submit"]');
+            showMessage("Invalid username or usermail(password). Please try again.");
+            submitButton.disabled = false;
+        }
+        
+
+        function login() {
+            
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            console.log("Username: " + username);
+            console.log("Password: " + password);
+            fetchUsers(username,password);
+        }   
+
+        function showMessage(message) {
+            var messageElement = document.getElementById('message');
+            messageElement.innerText = message;
+
+        }
+    </script>
 </head>
 <body>
     <!-- Header Section -->
@@ -42,10 +106,13 @@ Submission  : Mar 11, 2024
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required placeholder="Enter your password">
 
-                <button type="submit" class="login-btn">Login</button>
-                 <p>Don't have an account? <a href="signup.html" class="signup-link">Sign up here</a>.</p>
+                <button type="submit" class="login-btn" >Login</button>
+                <p>Don't have an account? <a href="signup.html" class="signup-link">Sign up here</a>.</p>
             </form>
         </section>
+        <div id="messageBox">
+            <p id="message"></p>
+        </div>
     </main>
 
     <footer class="footer">
