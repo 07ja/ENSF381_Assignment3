@@ -228,15 +228,29 @@ form input {
     padding: 10px;
     margin: 20px;
 }
+
 /*shopping cart*/
 .shoppingCart{
     font-size: 40px;
     margin: 40px;
     padding: 40px;
-    border: #007BFF dashed;
 }
 .shoppingItems{
     font-size: 30px;
+}
+
+.removeButton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin: 20px;
+    cursor: pointer;
+}
+
+.removeButton:hover {
+    background-color: #ff0000;
 }
 
 

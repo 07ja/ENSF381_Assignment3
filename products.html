@@ -37,9 +37,15 @@ Submission  : Mar 11, 2024
         });
 
         function addProductInfo(tag){
-            i =1
+            i = 1
             document.querySelectorAll(tag).forEach(tagItem =>{
                 product_json[`product${i}`][tag] = tagItem.innerText;
+                if (tag === 'h2') {
+                    product_json[`product${i}`]['name'] = tagItem.innerText;
+                }
+                else if (tag === 'p[class="price"]') {
+                    product_json[`product${i}`]['price'] = tagItem.innerText
+                }
                 i = i+1;
             });
         }
@@ -47,7 +53,8 @@ Submission  : Mar 11, 2024
         function addProductInHTML(productId){
             product_json[productId]['addedNum'] += 1;
             displayShoppingCart();
-            // console.log(product_json);
+            alert(`${product_json[productId]['name']} has been added to the cart`);
+            
         }
 
         function displayShoppingCart(){
@@ -58,11 +65,23 @@ Submission  : Mar 11, 2024
                 console.log(product);
                 if (product['addedNum'] > 0){
                     let p = document.createElement('p');
-                    p.textContent = `${product.h2} - ${product['p[class = "price"]']} - ${product.addedNum}`;
+                    p.innerHTML = `${product.h2} - ${product['p[class = "price"]']} - ${product.addedNum}
+                    <button class="removeButton" onclick="removeProduct('${productId}')">Remove</button>`;
                     shoppingList.appendChild(p);
                 }
             };
         }
+
+        function removeProduct(productId) {
+            if (product_json[productId]['addedNum'] > 0) {
+                product_json[productId]['addedNum'] -= 1;
+                if (product_json[productId]['quantity'] === 0) {
+                    delete product_json[productId];
+                }
+                displayShoppingCart();
+            }
+        }
+
     </script>
 </head>
 <body>
