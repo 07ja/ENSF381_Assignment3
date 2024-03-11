@@ -1,0 +1,115 @@
+<!--==========================================================================
+Name        : signup.html
+Assignment  : Assignment 3
+Author(s)   : Jaimal Sahota (30126909), Xicheng(Justin) Wang (30191121)
+Submission  : Mar 11, 2024
+===========================================================================-->
+
+<!-- contact.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Contact Us - Companyco</title>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="logo">
+            <img src="images/logo.png" alt="Company Logo">
+        </div>
+        <div class="company-name">
+            Company Name
+        </div>
+    </header>
+
+    <!-- Navigation Section -->
+    <nav>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="products.html" class="nav-link">Products</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="login.html" class="nav-link">Login</a> 
+    </nav>
+
+    <main>
+        <section class="signup-form">
+            <form action="#" method="post" onsubmit="return validateForm()">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your username">
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+
+                <label for="confirm">Confirm Password:</label>
+                <input type="password" id="confirm" name="confirm" required placeholder="Confirm your password">
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your Email">
+
+                <button type="submit" class="signup-btn">Signup</button>
+            </form>
+        </section>
+    </main>
+
+    <div id="message_box">
+        <p id="message"></p>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>&copy; 2024 Companyco. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function validateForm() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var confirm = document.getElementById('confirm').value;
+            var email = document.getElementById('email').value;
+            var message_box = document.getElementById('message_box');
+            var messageText = document.getElementById('message');
+            var isValid = true;
+            var errorMessage = '';
+
+            messageText.innerHTML = '';
+            
+            // username
+            var usernameRegex = /^[a-zA-Z][a-zA-Z0-9_-]{2,19}$/;
+            if (!usernameRegex.test(username)) {
+                errorMessage += 'Check the Username<br>';
+                isValid = false;
+            }
+            // password
+            var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+\[\]{}|;:'",.<>?\/`~])[A-Za-z\d!@#$%^&*()-_=+\[\]{}|;:'",.<>?\/`~]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                errorMessage += 'Invalid password format<br>';
+                isValid = false;
+            }
+            // confirm password
+            if (password !== confirm) {
+                errorMessage += 'Password does not match<br>';
+                isValid = false;
+            }
+            // email validation
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errorMessage += 'Check the Email<br>';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                messageText.innerHTML = 'Signup Successful';
+                return false
+            } 
+            else {
+                messageText.innerHTML = errorMessage;
+                return false
+            }
+        }
+    </script>
+</body>
+</html>
