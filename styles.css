@@ -228,7 +228,16 @@ form input {
     padding: 10px;
     margin: 20px;
 }
-
+/*shopping cart*/
+.shoppingCart{
+    font-size: 40px;
+    margin: 40px;
+    padding: 40px;
+    border: #007BFF dashed;
+}
+.shoppingItems{
+    font-size: 30px;
+}
 
 
 /* Signup Form Section Styles */

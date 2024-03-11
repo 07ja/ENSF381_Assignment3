@@ -15,6 +15,55 @@ Submission  : Mar 11, 2024
     <link rel="stylesheet" href="styles.css">
 
     <title>Products - ShopifyCo</title>
+    <script>
+        var product_json = {};
+        document.addEventListener('DOMContentLoaded', function afterRender() {
+            let i = 1;
+            document.querySelectorAll("button").forEach(product =>{
+                product.setAttribute('id', `product${i}`);
+                product.addEventListener('click', function() {
+                    console.log('test add:',product.id);
+                    addProductInHTML(product.id);
+                    });
+                i = i+1;
+            })
+            for (let id = 1; id<i;id++){
+                product_json[`product${id}`] = {'addedNum':0};
+            }//create initial json file
+            
+            addProductInfo("h2");
+            addProductInfo('p[class = "price"]');
+            console.log(product_json);
+        });
+
+        function addProductInfo(tag){
+            i =1
+            document.querySelectorAll(tag).forEach(tagItem =>{
+                product_json[`product${i}`][tag] = tagItem.innerText;
+                i = i+1;
+            });
+        }
+
+        function addProductInHTML(productId){
+            product_json[productId]['addedNum'] += 1;
+            displayShoppingCart();
+            // console.log(product_json);
+        }
+
+        function displayShoppingCart(){
+            let shoppingList = document.querySelector('p[class = "shoppingItems"]');
+            shoppingList.innerHTML = ''; 
+            for (productId in product_json){
+                let product = product_json[productId];
+                console.log(product);
+                if (product['addedNum'] > 0){
+                    let p = document.createElement('p');
+                    p.textContent = `${product.h2} - ${product['p[class = "price"]']} - ${product.addedNum}`;
+                    shoppingList.appendChild(p);
+                }
+            };
+        }
+    </script>
 </head>
 <body>
     <!-- Header Section -->
@@ -70,7 +119,12 @@ Submission  : Mar 11, 2024
                 </div>
             </div>
             <!-- Similarly create Product 5-8 -->
+            <section class ="shoppingCart">
+                <b >Shopping Cart</b>
+                <p class="shoppingItems"></p>
+            </section>
         </section>
+
     </main>
     
     <footer class="footer">
